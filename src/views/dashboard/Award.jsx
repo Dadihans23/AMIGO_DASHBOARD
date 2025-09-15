@@ -17,7 +17,7 @@ const Award = () => {
         </div>
         <div>
           <Typography variant='h4' color='primary'>
-            $42.8k
+            42.8k cfa
           </Typography>
         </div>
         <Button size='small' variant='contained' component={Link} href='/statistiques'>

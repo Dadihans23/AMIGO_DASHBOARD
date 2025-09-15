@@ -52,6 +52,7 @@ const UserProfile = () => {
   const [openSuspendDialog, setOpenSuspendDialog] = useState(false);
   const [openRechargeDialog, setOpenRechargeDialog] = useState(false);
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false);
+  const [openToggleStatusDialog, setOpenToggleStatusDialog] = useState(false);
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
@@ -61,9 +62,7 @@ const UserProfile = () => {
 
       if (id) {
         const fetchedUser = userData.find((u) => u.userId.toString() === id);
-
         setUser(fetchedUser || null);
-
       }
     };
 
@@ -76,13 +75,20 @@ const UserProfile = () => {
   };
 
   const handleRecharge = () => {
-    console.log(`Rechargement de ${amount} € pour ${user.name}`);
+    console.log(`Rechargement de ${amount} cfa pour ${user.name}`);
     setOpenRechargeDialog(false);
   };
 
   const handleWithdraw = () => {
-    console.log(`Retrait de ${amount} € pour ${user.name}`);
+    console.log(`Retrait de ${amount} cfa pour ${user.name}`);
     setOpenWithdrawDialog(false);
+  };
+
+  const handleToggleStatus = () => {
+    const newStatus = user.status === 'active' ? 'inactive' : 'active';
+    setUser({ ...user, status: newStatus });
+    console.log(`Utilisateur ${user.userId} ${newStatus === 'active' ? 'activé' : 'désactivé'}`);
+    setOpenToggleStatusDialog(false);
   };
 
   if (!user) return <Typography>Loading utilisateur...</Typography>;
@@ -102,13 +108,21 @@ const UserProfile = () => {
             size="small"
           />
           <Typography variant="body2" color="text.secondary">Date d&apos;inscription: {user.createdAt}</Typography>
-          <Typography variant="body2" color="text.secondary">Solde Wallet: {user.walletBalance} €</Typography>
+          <Typography variant="body2" color="text.secondary">Solde Wallet: {user.walletBalance} cfa</Typography>
         </div>
       </div>
       <div className="flex gap-2 mt-2">
         <Button variant="outlined" sx={{ mt: 2 }} onClick={() => setOpenRechargeDialog(true)}>Recharger</Button>
         <Button variant="outlined" sx={{ mt: 2 }} onClick={() => setOpenWithdrawDialog(true)}>Retirer</Button>
         <Button variant="outlined" color="error" sx={{ mt: 2 }} onClick={() => setOpenSuspendDialog(true)}>Suspendre</Button>
+        <Button 
+          variant="outlined" 
+          color={user.status === 'active' ? 'warning' : 'success'} 
+          sx={{ mt: 2 }} 
+          onClick={() => setOpenToggleStatusDialog(true)}
+        >
+          {user.status === 'active' ? 'Désactiver' : 'Activer'}
+        </Button>
       </div>
 
       <TableContainer component={Paper} sx={{ mt: 4 }}>
@@ -121,8 +135,8 @@ const UserProfile = () => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>{user.credits} €</TableCell>
-              <TableCell>{user.debits} €</TableCell>
+              <TableCell>{user.credits} cfa</TableCell>
+              <TableCell>{user.debits} cfa</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -177,6 +191,25 @@ const UserProfile = () => {
         <DialogActions>
           <Button onClick={() => setOpenWithdrawDialog(false)}>Annuler</Button>
           <Button onClick={handleWithdraw} color="primary">Retirer</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Modal de confirmation pour activer/désactiver */}
+      <Dialog open={openToggleStatusDialog} onClose={() => setOpenToggleStatusDialog(false)}>
+        <DialogTitle>{user.status === 'active' ? 'Confirmer la désactivation' : 'Confirmer l’activation'}</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Êtes-vous sûr de vouloir {user.status === 'active' ? 'désactiver' : 'activer'} cet utilisateur ?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenToggleStatusDialog(false)}>Annuler</Button>
+          <Button 
+            onClick={handleToggleStatus} 
+            color={user.status === 'active' ? 'warning' : 'success'}
+          >
+            {user.status === 'active' ? 'Désactiver' : 'Activer'}
+          </Button>
         </DialogActions>
       </Dialog>
     </Card>

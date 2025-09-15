@@ -70,6 +70,7 @@ const TableMerchant = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [statusFilter, setStatusFilter] = useState('');
 
   const handleOpenEditDialog = (merchant) => {
     setCurrentMerchant(merchant);
@@ -128,8 +129,26 @@ const TableMerchant = () => {
     router.push(`/amigo-dash/userprofile/${userId}`);
   };
 
+  const filteredRowsData = rowsData.filter(row =>
+    (statusFilter === '' || row.status === statusFilter)
+  );
+
   return (
     <Card>
+      <div className='p-4 flex gap-4'>
+        <FormControl fullWidth sx={{ maxWidth: 200 }}>
+          <InputLabel>Statut</InputLabel>
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            label="Statut"
+          >
+            <MenuItem value="">Tous</MenuItem>
+            <MenuItem value="active">Actif</MenuItem>
+            <MenuItem value="suspended">Suspendu</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <TableContainer component={Paper}>
         <Table aria-label='Merchant Table'>
           <TableHead>
@@ -143,7 +162,7 @@ const TableMerchant = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rowsData.map((row) => (
+            {filteredRowsData.map((row) => (
               <TableRow key={row.userId}>
                 <TableCell>{row.userId}</TableCell>
                 <TableCell>{row.name}</TableCell>
