@@ -16,65 +16,6 @@ import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import CustomAvatar from '@core/components/mui/Avatar';
 
-// Données simulées pour les cashbacks reçus
-const cashbackData = [
-  {
-    purchaseId: 'P001',
-    userId: '1',
-    merchantEmail: 'marchanda@example.com',
-    date: '2025-08-15',
-    amount: 150.00,
-    merchantCashback: 3.00, // 2%
-    status: 'Confirmé',
-  },
-  {
-    purchaseId: 'P002',
-    userId: '1',
-    merchantEmail: 'marchanda@example.com',
-    date: '2025-09-01',
-    amount: 200.50,
-    merchantCashback: 4.01, // 2%
-    status: 'Confirmé',
-  },
-  {
-    purchaseId: 'P003',
-    userId: '3',
-    merchantEmail: 'marchanda@example.com',
-    date: '2025-07-20',
-    amount: 300.00,
-    merchantCashback: 6.00, // 2%
-    status: 'Confirmé',
-  },
-  {
-    purchaseId: 'P004',
-    userId: '3',
-    merchantEmail: 'marchanda@example.com',
-    date: '2025-08-10',
-    amount: 200.00,
-    merchantCashback: 4.00, // 2%
-    status: 'Annulé',
-  },
-  {
-    purchaseId: 'P005',
-    userId: '6',
-    merchantEmail: 'marchanda@example.com',
-    date: '2025-09-05',
-    amount: 220.25,
-    merchantCashback: 4.41, // 2%
-    status: 'Confirmé',
-  },
-  {
-    purchaseId: 'P006',
-    userId: '2',
-    merchantEmail: 'marchandb@example.com',
-    date: '2025-09-02',
-    amount: 189.99,
-    merchantCashback: 3.80, // 2%
-    status: 'Confirmé',
-  },
-];
-
-// Données des utilisateurs pour l'affichage
 const userData = [
   {
     userId: '1',
@@ -102,24 +43,115 @@ const userData = [
   },
 ];
 
-const MerchantReceivedCashbackDetails = () => {
+const rowsData = [
+  {
+    id: '1',
+    userId: '1',
+    cashierName: 'Caissier 1',
+    date: '2025-08-15',
+    amount: 350.50,
+    cashback: 70.10,
+    status: 'En attente',
+    transactionId: 'TX001',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '2',
+    userId: '3',
+    cashierName: 'Caissier 2',
+    date: '2025-07-20',
+    amount: 500.00,
+    cashback: 100.00,
+    status: 'Reversé',
+    transactionId: 'TX002',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '3',
+    userId: '6',
+    cashierName: 'Caissier 3',
+    date: '2025-09-05',
+    amount: 220.25,
+    cashback: 44.05,
+    status: 'En attente',
+    transactionId: 'TX003',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '4',
+    userId: '2',
+    cashierName: 'Caissier 4',
+    date: '2025-09-02',
+    amount: 189.99,
+    cashback: 38.00,
+    status: 'Reversé',
+    transactionId: 'TX004',
+    merchantEmail: 'marchandb@example.com',
+  },
+  {
+    id: '5',
+    userId: '1',
+    cashierName: 'Caissier 1',
+    date: '2025-08-10',
+    amount: 400.00,
+    cashback: 80.00,
+    status: 'En attente',
+    transactionId: 'TX005',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '6',
+    userId: '3',
+    cashierName: 'Caissier 2',
+    date: '2025-07-25',
+    amount: 300.00,
+    cashback: 60.00,
+    status: 'Reversé',
+    transactionId: 'TX006',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '7',
+    userId: '6',
+    cashierName: 'Caissier 3',
+    date: '2025-09-10',
+    amount: 450.00,
+    cashback: 90.00,
+    status: 'En attente',
+    transactionId: 'TX007',
+    merchantEmail: 'marchanda@example.com',
+  },
+  {
+    id: '8',
+    userId: '1',
+    cashierName: 'Caissier 4',
+    date: '2025-08-05',
+    amount: 250.00,
+    cashback: 50.00,
+    status: 'Reversé',
+    transactionId: 'TX008',
+    merchantEmail: 'marchanda@example.com',
+  },
+];
+
+const MerchantReceivedCashbackDetail = () => {
   const [user, setUser] = useState(null);
-  const [cashbacks, setCashbacks] = useState([]);
-  const merchantEmail = 'marchanda@example.com'; // Email du marchand connecté
+  const [transactions, setTransactions] = useState([]);
+  const merchantEmail = 'marchanda@example.com';
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       const url = window.location.href;
       const userId = url.split('/').pop();
 
       if (userId) {
         const fetchedUser = userData.find(u => u.userId === userId);
-        const userCashbacks = cashbackData.filter(
-          p => p.userId === userId && p.merchantEmail === merchantEmail
+        const userTransactions = rowsData.filter(
+          t => t.userId === userId && t.merchantEmail === merchantEmail
         );
         setUser(fetchedUser || null);
-        setCashbacks(userCashbacks);
+        setTransactions(userTransactions);
       }
     };
 
@@ -139,32 +171,34 @@ const MerchantReceivedCashbackDetails = () => {
       </div>
 
       <Typography variant="h6" sx={{ mt: 4 }}>
-        Cashbacks reçus pour les achats de cet utilisateur
+        Transactions effectuées via ce marchand
       </Typography>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID Achat</TableCell>
+              <TableCell>ID Transaction</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Montant de l'Achat</TableCell>
-              <TableCell>Cashback Reçu</TableCell>
+              <TableCell>Caissier</TableCell>
+              <TableCell>Montant</TableCell>
+              <TableCell>Cashback</TableCell>
               <TableCell>Statut</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cashbacks.map((cashback) => (
-              <TableRow key={cashback.purchaseId}>
-                <TableCell>{cashback.purchaseId}</TableCell>
-                <TableCell>{cashback.date}</TableCell>
-                <TableCell>{cashback.amount.toFixed(2)} cfa</TableCell>
-                <TableCell>{cashback.merchantCashback.toFixed(2)} cfa</TableCell>
+            {transactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell>{transaction.transactionId}</TableCell>
+                <TableCell>{transaction.date}</TableCell>
+                <TableCell>{transaction.cashierName}</TableCell>
+                <TableCell>{transaction.amount.toFixed(2)} cfa</TableCell>
+                <TableCell>{transaction.cashback.toFixed(2)} cfa</TableCell>
                 <TableCell>
                   <Chip
                     className="capitalize"
                     variant="tonal"
-                    color={cashback.status === 'Confirmé' ? 'success' : 'error'}
-                    label={cashback.status}
+                    color={transaction.status === 'Reversé' ? 'success' : 'error'}
+                    label={transaction.status}
                     size="small"
                   />
                 </TableCell>
@@ -177,4 +211,4 @@ const MerchantReceivedCashbackDetails = () => {
   );
 };
 
-export default MerchantReceivedCashbackDetails;
+export default MerchantReceivedCashbackDetail;

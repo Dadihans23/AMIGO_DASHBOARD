@@ -100,9 +100,9 @@ const MerchantManagement = () => {
         <Button variant="contained" color="primary" onClick={handleOpenAddDialog} sx={{ marginRight: 2 }}>
           Ajouter un Marchand
         </Button>
-        <Button variant="contained" color="primary" onClick={handleOpenAddProfileDialog}>
+        {/* <Button variant="contained" color="primary" onClick={handleOpenAddProfileDialog}>
           Ajouter un profil
-        </Button>
+        </Button> */}
       </Grid>
 
       <Grid item xs={12}>

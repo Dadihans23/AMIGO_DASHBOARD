@@ -47,7 +47,7 @@ const RevenueManagement = () => {
         <Grid item xs={12} md={3}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>Cashback Reversé</Typography>
+              <Typography variant="h5" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>Cashback Utilisateur</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>
                 {cashbackPaid} cfa
               </Typography>

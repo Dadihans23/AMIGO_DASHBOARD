@@ -164,6 +164,14 @@ const CashierManagement = () => {
                   value={newCashier.email}
                   onChange={e => setNewCashier({ ...newCashier, email: e.target.value })}
                 />
+                <TextField
+                  margin='dense'
+                  label='Password'
+                  type='Password'
+                  fullWidth
+                  value={newCashier.password}
+                  onChange={e => setNewCashier({ ...newCashier, password: e.target.value })}
+                />
               </DialogContent>
               <DialogActions>
                 <Button onClick={resetCreateForm} color='secondary'>

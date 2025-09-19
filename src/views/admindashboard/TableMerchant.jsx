@@ -71,6 +71,7 @@ const TableMerchant = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const [statusFilter, setStatusFilter] = useState('');
+  const [phoneFilter, setPhoneFilter] = useState('');
 
   const handleOpenEditDialog = (merchant) => {
     setCurrentMerchant(merchant);
@@ -126,17 +127,18 @@ const TableMerchant = () => {
   };
 
   const handleViewProfile = (userId) => {
-    router.push(`/amigo-dash/userprofile/${userId}`);
+    router.push(`/amigo-dash/merchants/${userId}`);
   };
 
   const filteredRowsData = rowsData.filter(row =>
-    (statusFilter === '' || row.status === statusFilter)
+    (statusFilter === '' || row.status === statusFilter) &&
+    (phoneFilter === '' || row.phone_number.toLowerCase().includes(phoneFilter.toLowerCase()))
   );
 
   return (
     <Card>
       <div className='p-4 flex gap-4'>
-        <FormControl fullWidth sx={{ maxWidth: 200 }}>
+        <FormControl fullWidth sx={{ maxWidth: 150 }}>
           <InputLabel>Statut</InputLabel>
           <Select
             value={statusFilter}
@@ -148,6 +150,13 @@ const TableMerchant = () => {
             <MenuItem value="suspended">Suspendu</MenuItem>
           </Select>
         </FormControl>
+        <TextField
+          label="Rechercher par numéro de téléphone"
+          variant="outlined"
+          sx={{ maxWidth: 400 }}
+          value={phoneFilter}
+          onChange={(e) => setPhoneFilter(e.target.value)}
+        />
       </div>
       <TableContainer component={Paper}>
         <Table aria-label='Merchant Table'>

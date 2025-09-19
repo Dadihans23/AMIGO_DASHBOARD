@@ -46,29 +46,24 @@ const globalStatsData = [
     description: ''
   },
   {
-    title: 'Total des ristournes sur la plateforme',
+    title: 'Total des cashbacks sur la plateforme',
     count: '45k FCFA',
     icon: 'ri-discount-2-line',
     description: ''
   },
   {
-    title: 'Total des ristournes attendues',
+    title: 'Total des cashbacks attendues',
     count: '20k FCFA',
     icon: 'ri-calendar-event-line',
     description: ''
   },
   {
-    title: 'Total des ristournes reçues',
+    title: 'Total des cashbacks reçues',
     count: '15k FCFA',
     icon: 'ri-receipt-line',
     description: ''
   },
-  {
-    title: 'Total des ristournes utilisées',
-    count: '10k FCFA',
-    icon: 'ri-check-double-line',
-    description: ''
-  }
+  
 ]
 
 const GlobalStatistics = () => {

@@ -12,6 +12,8 @@ import DepositWithdraw from '@views/dashboard/DepositWithdraw'
 import SalesByCountries from '@views/dashboard/SalesByCountries'
 import CardStatVertical from '@components/card-statistics/Vertical'
 import Table from '@views/dashboard/Table'
+import MerchantDashboard from '@views/dashboard/MerchantDashboard';
+
 
 const DashboardAnalytics = () => {
   return (
@@ -22,9 +24,8 @@ const DashboardAnalytics = () => {
       <Grid item xs={8} md={8} lg={8}>
         <Transactions />
       </Grid>
-
       <Grid item xs={12} lg={12}>
-        <DepositWithdraw />
+        <MerchantDashboard />
       </Grid>
 
       {/* <Grid item xs={12} md={6} lg={4}>

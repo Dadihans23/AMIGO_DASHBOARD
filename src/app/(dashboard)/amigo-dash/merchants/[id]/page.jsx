@@ -33,23 +33,33 @@ const userData = [
     userId: 1,
     avatarSrc: '/images/avatars/1.png',
     name: 'Jordan Stevenson',
-    email: 'Jacinthe_Blick@hotmail.com',
+    email: 'jacinthe_blick@hotmail.com',
     status: 'active',
-    walletBalance: 5000,
+    walletBalance: 10000, // Solde du marchand
     createdAt: '2023-01-01',
     credits: 300,
     debits: 100,
+    salesCount: 15, // Nombre de ventes pertinentes
+    totalSalesAmount: 150000, // Montant total des ventes (XOF)
+    uniqueCustomers: 8, // Nombre de clients uniques
+    cashbackReceived: 10000, // Cashback total reçu (20% des ventes, ex. 150000 * 0.2 / 3 pour ajustement)
+    cashbackDue: 2000, // Cashback restant dû (après paiements partiels)
   },
   {
     userId: 2,
     avatarSrc: '/images/avatars/2.png',
     name: 'Richard Payne',
-    email: 'Jaylon_Bartell3@gmail.com',
+    email: 'jaylon_bartell3@gmail.com',
     status: 'active',
-    walletBalance: 3000,
+    walletBalance: 5000,
     createdAt: '2023-02-15',
     credits: 200,
     debits: 50,
+    salesCount: 5,
+    totalSalesAmount: 50000,
+    uniqueCustomers: 3,
+    cashbackReceived: 5000, // 20% des ventes
+    cashbackDue: 1000, // Restant dû après paiements
   },
 ];
 
@@ -57,106 +67,162 @@ const transactionData = [
   {
     date: '2023-09-20 10:00',
     transactionId: 'T1001',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Restaurant Chez Paul',
+    amigoId: 'A2001',
+    customerName: 'Jordan Stevenson',
     purchaseAmount: 350.50,
-    discountReceived: 42.06, // 12% de 350.50
+    discount: 70.10, // 20% de 350.50
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA001',
   },
   {
     date: '2023-09-21 11:15',
     transactionId: 'T1002',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Café Aroma',
+    amigoId: 'A2002',
+    customerName: 'Jennifer Summers',
     purchaseAmount: 220.25,
-    discountReceived: 26.43, // 12% de 220.25
+    discount: 44.05, // 20% de 220.25
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA002',
   },
   {
     date: '2023-09-22 12:30',
     transactionId: 'T1003',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Boulangerie Marie',
+    amigoId: 'A2003',
+    customerName: 'Jordan Stevenson',
     purchaseAmount: 500.00,
-    discountReceived: 60.00, // 12% de 500.00
+    discount: 100.00, // 20% de 500.00
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA003',
   },
   {
     date: '2023-09-23 14:45',
     transactionId: 'T1004',
-    customerEmail: 'Jaylon_Bartell3@gmail.com',
-    merchantName: 'Pizzeria Bella',
+    amigoId: 'A2004',
+    customerName: 'Richard Payne',
     purchaseAmount: 189.99,
-    discountReceived: 22.80, // 12% de 189.99
+    discount: 38.00, // 20% de 189.99
+    merchantEmail: 'jaylon_bartell3@gmail.com',
+    cashierId: 'CA004',
   },
   {
     date: '2023-09-24 09:00',
     transactionId: 'T1005',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Restaurant Chez Paul',
-    purchaseAmount: 1000,
-    discountReceived: 120, // 12%
+    amigoId: 'A2005',
+    customerName: 'Client 5',
+    purchaseAmount: 10000,
+    discount: 2000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA005',
   },
   {
     date: '2023-09-25 15:30',
     transactionId: 'T1006',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Café Aroma',
-    purchaseAmount: 2000,
-    discountReceived: 240, // 12%
+    amigoId: 'A2006',
+    customerName: 'Client 6',
+    purchaseAmount: 15000,
+    discount: 3000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA006',
   },
   {
     date: '2023-09-26 08:15',
     transactionId: 'T1007',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Boulangerie Marie',
-    purchaseAmount: 5000,
-    discountReceived: 600, // 12%
+    amigoId: 'A2007',
+    customerName: 'Client 7',
+    purchaseAmount: 20000,
+    discount: 4000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA007',
   },
   {
     date: '2023-09-27 16:00',
     transactionId: 'T1008',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Restaurant Chez Paul',
-    purchaseAmount: 10000,
-    discountReceived: 1200, // 12%
+    amigoId: 'A2008',
+    customerName: 'Client 8',
+    purchaseAmount: 25000,
+    discount: 5000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA008',
   },
   {
     date: '2023-09-28 17:45',
     transactionId: 'T1009',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Café Aroma',
-    purchaseAmount: 25000,
-    discountReceived: 3000, // 12%
+    amigoId: 'A2009',
+    customerName: 'Client 9',
+    purchaseAmount: 30000,
+    discount: 6000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA009',
   },
   {
     date: '2023-09-29 10:30',
     transactionId: 'T1010',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Pizzeria Bella',
-    purchaseAmount: 50000,
-    discountReceived: 6000, // 12%
+    amigoId: 'A2010',
+    customerName: 'Client 10',
+    purchaseAmount: 35000,
+    discount: 7000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA010',
   },
   {
     date: '2023-09-30 11:00',
     transactionId: 'T1011',
-    customerEmail: 'Jacinthe_Blick@hotmail.com',
-    merchantName: 'Boulangerie Marie',
+    amigoId: 'A2011',
+    customerName: 'Client 11',
     purchaseAmount: 40000,
-    discountReceived: 4800, // 12%
+    discount: 8000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA011',
   },
   {
     date: '2023-10-01 12:15',
     transactionId: 'T1012',
-    customerEmail: 'Jaylon_Bartell3@gmail.com',
-    merchantName: 'Restaurant Chez Paul',
-    purchaseAmount: 10000,
-    discountReceived: 1200, // 12%
+    amigoId: 'A2012',
+    customerName: 'Client 12',
+    purchaseAmount: 45000,
+    discount: 9000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA012',
   },
   {
     date: '2023-10-02 13:30',
     transactionId: 'T1013',
-    customerEmail: 'Jaylon_Bartell3@gmail.com',
-    merchantName: 'Café Aroma',
-    purchaseAmount: 25000,
-    discountReceived: 3000, // 12%
+    amigoId: 'A2013',
+    customerName: 'Client 13',
+    purchaseAmount: 50000,
+    discount: 10000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA013',
+  },
+  {
+    date: '2023-10-03 14:45',
+    transactionId: 'T1014',
+    amigoId: 'A2014',
+    customerName: 'Client 14',
+    purchaseAmount: 55000,
+    discount: 11000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA014',
+  },
+  {
+    date: '2023-10-04 09:00',
+    transactionId: 'T1015',
+    amigoId: 'A2015',
+    customerName: 'Client 15',
+    purchaseAmount: 60000,
+    discount: 12000, // 20%
+    merchantEmail: 'jacinthe_blick@hotmail.com',
+    cashierId: 'CA015',
+  },
+  {
+    date: '2023-10-05 10:15',
+    transactionId: 'T1016',
+    amigoId: 'A2016',
+    customerName: 'Client 16',
+    purchaseAmount: 65000,
+    discount: 13000, // 20%
+    merchantEmail: 'jaylon_bartell3@gmail.com',
+    cashierId: 'CA016',
   },
 ];
 
@@ -224,10 +290,10 @@ const UserProfile = () => {
 
   if (!user) return <Typography>Loading utilisateur...</Typography>;
 
-  // Filtrer les transactions par email du client, recherche par ID de transaction et plage de dates
+  // Filtrer les transactions par date (convertir la date en objet Date pour comparaison)
   const filteredRows = transactionData.filter((row) => {
-    if (row.customerEmail !== user.email) return false;
-    if (searchTerm && !row.transactionId.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    if (row.merchantEmail !== user.email) return false;
+    if (searchTerm && !row.amigoId.toLowerCase().includes(searchTerm.toLowerCase())) return false;
     if (startDate) {
       const rowDate = new Date(row.date);
       const start = new Date(startDate);
@@ -242,11 +308,6 @@ const UserProfile = () => {
     return true;
   });
 
-  // Calculer les métriques pour les cartes
-  const totalPurchases = filteredRows.length;
-  const totalAmount = filteredRows.reduce((sum, row) => sum + row.purchaseAmount, 0);
-  const totalCashback = filteredRows.reduce((sum, row) => sum + row.discountReceived, 0);
-
   const displayedRows = filteredRows.slice(
     (page - 1) * rowsPerPage,
     (page - 1) * rowsPerPage + rowsPerPage
@@ -259,6 +320,56 @@ const UserProfile = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre de ventes</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                {user.salesCount}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
+            <CardContent>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Montant total des ventes</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                {user.totalSalesAmount.toFixed(2)} XOF
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
+            <CardContent>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre de clients</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                {user.uniqueCustomers}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
+            <CardContent>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback reçu</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                {user.cashbackReceived.toFixed(2)} XOF
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
+            <CardContent>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback dû</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                {user.cashbackDue.toFixed(2)} XOF
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
+            <CardContent>
               <Typography variant="h5" sx={{ color: '#fff' }}>Solde</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {user.walletBalance.toFixed(2)} XOF
@@ -266,39 +377,9 @@ const UserProfile = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
-            <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre d'achats total</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalPurchases}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
-            <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Montant total</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalAmount.toFixed(2)} XOF
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
-            <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback total reversé</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalCashback.toFixed(2)} XOF
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
       </Grid>
 
-      {/* Section des détails */}
+      {/* Section des détails existants */}
       <Grid item xs={12}>
         <Card sx={{ p: 4 }}>
           <div className="flex items-center gap-4">
@@ -331,7 +412,7 @@ const UserProfile = () => {
           </div>
 
           {/* Table des crédits/débits */}
-          {/* <TableContainer component={Paper} sx={{ mt: 4 }}>
+          <TableContainer component={Paper} sx={{ mt: 4 }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -346,7 +427,7 @@ const UserProfile = () => {
                 </TableRow>
               </TableBody>
             </Table>
-          </TableContainer> */}
+          </TableContainer>
 
           {/* Table des transactions */}
           <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
@@ -355,7 +436,7 @@ const UserProfile = () => {
           <Card sx={{ mt: 2 }}>
             <div className='p-4 flex gap-4'>
               <TextField
-                label='Rechercher par ID de Transaction'
+                label='Rechercher par ID Amigo'
                 variant='outlined'
                 sx={{ maxWidth: 300 }}
                 value={searchTerm}
@@ -389,9 +470,11 @@ const UserProfile = () => {
                   <TableRow>
                     <TableCell>Date</TableCell>
                     <TableCell>ID de Transaction</TableCell>
-                    <TableCell>Nom du Marchand</TableCell>
+                    <TableCell>ID Amigo Client</TableCell>
+                    <TableCell>Nom Client</TableCell>
                     <TableCell>Montant de l&apos;Achat (XOF)</TableCell>
-                    <TableCell>Ristourne Reçue (XOF)</TableCell>
+                    <TableCell>Ristourne Accordée (XOF)</TableCell>
+                    <TableCell>ID du Caissier</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -400,9 +483,13 @@ const UserProfile = () => {
                     <TableRow key={row.transactionId}>
                       <TableCell>{row.date}</TableCell>
                       <TableCell>{row.transactionId}</TableCell>
-                      <TableCell>{row.merchantName}</TableCell>
+                      <TableCell>
+                        <Chip label={row.amigoId} />
+                      </TableCell>
+                      <TableCell>{row.customerName}</TableCell>
                       <TableCell>{row.purchaseAmount.toFixed(2)} XOF</TableCell>
-                      <TableCell>{row.discountReceived.toFixed(2)} XOF</TableCell>
+                      <TableCell>{row.discount.toFixed(2)} XOF</TableCell>
+                      <TableCell>{row.cashierId}</TableCell>
                       <TableCell>
                         <Link href={`/amigo-dash/transactions/${row.transactionId}`} color='primary'>
                           En savoir plus

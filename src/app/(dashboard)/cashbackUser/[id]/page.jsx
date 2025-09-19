@@ -16,12 +16,12 @@ import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import CustomAvatar from '@core/components/mui/Avatar';
 
-// Données simulées pour les achats individuels
 const purchaseData = [
   {
     purchaseId: 'P001',
     userId: '1',
     merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 1',
     date: '2025-08-15',
     amount: 150.00,
     cashback: 7.50,
@@ -31,15 +31,17 @@ const purchaseData = [
     purchaseId: 'P002',
     userId: '1',
     merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 2',
     date: '2025-09-01',
     amount: 200.50,
-    cashback: 10.00,
+    cashback: 10.03,
     status: 'Confirmé',
   },
   {
     purchaseId: 'P003',
     userId: '3',
     merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 3',
     date: '2025-07-20',
     amount: 300.00,
     cashback: 15.00,
@@ -49,6 +51,7 @@ const purchaseData = [
     purchaseId: 'P004',
     userId: '3',
     merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 4',
     date: '2025-08-10',
     amount: 200.00,
     cashback: 10.00,
@@ -58,23 +61,164 @@ const purchaseData = [
     purchaseId: 'P005',
     userId: '6',
     merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 1',
     date: '2025-09-05',
     amount: 220.25,
-    cashback: 11.00,
+    cashback: 11.01,
     status: 'Confirmé',
   },
   {
     purchaseId: 'P006',
     userId: '2',
     merchantEmail: 'marchandb@example.com',
+    cashierName: 'Caissier 2',
     date: '2025-09-02',
     amount: 189.99,
     cashback: 9.50,
     status: 'Confirmé',
   },
+  {
+    purchaseId: 'P007',
+    userId: '1',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 3',
+    date: '2025-07-25',
+    amount: 250.75,
+    cashback: 12.54,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P008',
+    userId: '3',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 4',
+    date: '2025-08-20',
+    amount: 175.50,
+    cashback: 8.78,
+    status: 'Annulé',
+  },
+  {
+    purchaseId: 'P009',
+    userId: '6',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 1',
+    date: '2025-09-10',
+    amount: 310.00,
+    cashback: 15.50,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P010',
+    userId: '2',
+    merchantEmail: 'marchandb@example.com',
+    cashierName: 'Caissier 2',
+    date: '2025-09-15',
+    amount: 130.25,
+    cashback: 6.51,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P011',
+    userId: '1',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 3',
+    date: '2025-07-30',
+    amount: 180.00,
+    cashback: 9.00,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P012',
+    userId: '3',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 4',
+    date: '2025-08-25',
+    amount: 275.25,
+    cashback: 13.76,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P013',
+    userId: '6',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 1',
+    date: '2025-09-12',
+    amount: 190.50,
+    cashback: 9.53,
+    status: 'Annulé',
+  },
+  {
+    purchaseId: 'P014',
+    userId: '2',
+    merchantEmail: 'marchandb@example.com',
+    cashierName: 'Caissier 2',
+    date: '2025-09-18',
+    amount: 210.00,
+    cashback: 10.50,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P015',
+    userId: '1',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 3',
+    date: '2025-08-05',
+    amount: 320.75,
+    cashback: 16.04,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P016',
+    userId: '3',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 4',
+    date: '2025-08-30',
+    amount: 260.00,
+    cashback: 13.00,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P017',
+    userId: '6',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 1',
+    date: '2025-09-15',
+    amount: 230.25,
+    cashback: 11.51,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P018',
+    userId: '2',
+    merchantEmail: 'marchandb@example.com',
+    cashierName: 'Caissier 2',
+    date: '2025-09-20',
+    amount: 170.99,
+    cashback: 8.55,
+    status: 'Annulé',
+  },
+  {
+    purchaseId: 'P019',
+    userId: '1',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 3',
+    date: '2025-07-15',
+    amount: 280.50,
+    cashback: 14.03,
+    status: 'Confirmé',
+  },
+  {
+    purchaseId: 'P020',
+    userId: '3',
+    merchantEmail: 'marchanda@example.com',
+    cashierName: 'Caissier 4',
+    date: '2025-08-15',
+    amount: 240.00,
+    cashback: 12.00,
+    status: 'Confirmé',
+  },
 ];
 
-// Données des utilisateurs pour l'affichage
 const userData = [
   {
     userId: '1',
@@ -105,7 +249,7 @@ const userData = [
 const MerchantCashbackDetails = () => {
   const [user, setUser] = useState(null);
   const [purchases, setPurchases] = useState([]);
-  const merchantEmail = 'marchanda@example.com'; // Email du marchand connecté
+  const merchantEmail = 'marchanda@example.com';
   const router = useRouter();
 
   useEffect(() => {
@@ -147,6 +291,7 @@ const MerchantCashbackDetails = () => {
             <TableRow>
               <TableCell>ID Achat</TableCell>
               <TableCell>Date</TableCell>
+              <TableCell>Caissier</TableCell>
               <TableCell>Montant</TableCell>
               <TableCell>Cashback</TableCell>
               <TableCell>Statut</TableCell>
@@ -157,6 +302,7 @@ const MerchantCashbackDetails = () => {
               <TableRow key={purchase.purchaseId}>
                 <TableCell>{purchase.purchaseId}</TableCell>
                 <TableCell>{purchase.date}</TableCell>
+                <TableCell>{purchase.cashierName}</TableCell>
                 <TableCell>{purchase.amount.toFixed(2)} cfa</TableCell>
                 <TableCell>{purchase.cashback.toFixed(2)} cfa</TableCell>
                 <TableCell>

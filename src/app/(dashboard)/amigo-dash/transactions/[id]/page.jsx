@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
 import { Typography, Card, Button, Grid, Paper, CircularProgress } from '@mui/material';
 
 // Contenu fictif de rowsData
@@ -12,11 +11,14 @@ const rowsData = [
     amigoId: 'A001',
     customerName: 'Jean Dupont',
     merchantName: 'Boutique de Vêtements',
-    operationDescription: 'Ristoune Achat de vêtements',
-    amount: +92,
+    merchantId: 'M001',
+    operationDescription: 'Ristourne Achat de vêtements',
+    amount: 92,
     balanceBefore: 100,
     balanceAfter: 192,
     cashierName: 'Alice Martin',
+    clientShare: 55.20, // 12% de 460 (montant implicite)
+    amigoShare: 36.80 // 8% de 460
   },
   {
     transactionId: 'T1002',
@@ -24,15 +26,18 @@ const rowsData = [
     amigoId: 'A002',
     customerName: 'Marie Curie',
     merchantName: 'Librairie',
+    merchantId: 'M002',
     operationDescription: 'Utilisation ristourne pour Achat de livres',
     amount: -145,
     balanceBefore: 445,
     balanceAfter: 300,
     cashierName: 'Bob Durand',
+    clientShare: 0, // Pas de cashback pour une dépense
+    amigoShare: 0
   },
 ];
 
-const formatCurrency = (amount) => `${amount} FCFA`;
+const formatCurrency = (amount) => `${amount.toFixed(2)} FCFA`;
 
 const TransactionDetail = () => {
   const [transaction, setTransaction] = useState(null);
@@ -45,7 +50,6 @@ const TransactionDetail = () => {
 
       if (id) {
         const foundTransaction = rowsData.find(row => row.transactionId === id);
-
         setTransaction(foundTransaction || null);
       }
 
@@ -74,9 +78,12 @@ const TransactionDetail = () => {
                 { label: 'ID Amigo', value: transaction.amigoId },
                 { label: 'Nom Client', value: transaction.customerName },
                 { label: 'Nom Marchand', value: transaction.merchantName },
+                { label: 'ID du Marchand', value: transaction.merchantId },
                 { label: 'Nom Caissier', value: transaction.cashierName },
                 { label: 'Description d\'Opération', value: transaction.operationDescription },
                 { label: 'Montant de l\'Opération', value: formatCurrency(transaction.amount), isAmount: true },
+                { label: 'Part du Client', value: formatCurrency(transaction.clientShare) },
+                { label: 'Part d\'Amigo', value: formatCurrency(transaction.amigoShare) },
                 { label: 'Solde Avant', value: formatCurrency(transaction.balanceBefore) },
                 { label: 'Solde Après', value: formatCurrency(transaction.balanceAfter) },
               ].map(({ label, value, isAmount }, index) => (

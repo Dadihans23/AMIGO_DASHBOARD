@@ -20,7 +20,7 @@ const MerchantReceivedCashback = () => {
       name: 'Jordan Stevenson',
       email: 'jacinthe_blick@hotmail.com',
       purchaseAmount: 350.50,
-      merchantCashback: 7.01, // Ex. 2% du montant de l'achat
+      merchantCashback: 70.10, // 20% du montant de l'achat
       date: '2025-08-15',
       merchantEmail: 'marchanda@example.com',
     },
@@ -30,7 +30,7 @@ const MerchantReceivedCashback = () => {
       name: 'Jennifer Summers',
       email: 'tristin_johnson@gmail.com',
       purchaseAmount: 500.00,
-      merchantCashback: 10.00, // 2%
+      merchantCashback: 100.00, // 20%
       date: '2025-07-20',
       merchantEmail: 'marchanda@example.com',
     },
@@ -40,7 +40,7 @@ const MerchantReceivedCashback = () => {
       name: 'Jordan Stevenson',
       email: 'jacinthe_blick@hotmail.com',
       purchaseAmount: 220.25,
-      merchantCashback: 4.41, // 2%
+      merchantCashback: 44.05, // 20%
       date: '2025-09-05',
       merchantEmail: 'marchanda@example.com',
     },
@@ -50,7 +50,7 @@ const MerchantReceivedCashback = () => {
       name: 'Richard Payne',
       email: 'jaylon_bartell3@gmail.com',
       purchaseAmount: 189.99,
-      merchantCashback: 3.80, // 2%
+      merchantCashback: 38.00, // 20%
       date: '2025-09-02',
       merchantEmail: 'marchandb@example.com',
     },
@@ -60,21 +60,23 @@ const MerchantReceivedCashback = () => {
   const totalUsers = [...new Set(merchantData.map(row => row.userId))].length;
   const totalPurchasesAmount = merchantData.reduce((sum, row) => sum + row.purchaseAmount, 0);
   const totalCashbackReceived = merchantData.reduce((sum, row) => sum + row.merchantCashback, 0);
+  const totalCashbackPaid = 8000; // Cashback déjà reversé à la plateforme (ex. sur 10000 total, 8000 payé)
+  const cashbackDue = totalCashbackReceived - totalCashbackPaid; // Cashback dû à la plateforme
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
-          Cashback Reçu
+          Relation Marchand - Amigo
         </Typography>
       </Grid>
       <Grid container spacing={2} sx={{ padding: 5 }}>
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre Total de vente</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Solde du Marchand</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalUsers}
+                15000 cfa
               </Typography>
             </CardContent>
           </Card>
@@ -83,9 +85,9 @@ const MerchantReceivedCashback = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Montant Total des Achats</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback dû à la plateforme</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalPurchasesAmount.toFixed(2)} cfa
+                {cashbackDue.toFixed(2)} cfa
               </Typography>
             </CardContent>
           </Card>
@@ -94,9 +96,9 @@ const MerchantReceivedCashback = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback Total Reçu</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback reversé à la plateforme</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
-                {totalCashbackReceived.toFixed(2)} cfa
+                {totalCashbackPaid.toFixed(2)} cfa
               </Typography>
             </CardContent>
           </Card>

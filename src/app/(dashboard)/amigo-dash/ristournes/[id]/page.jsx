@@ -71,7 +71,6 @@ const TransactionDetail = () => {
                 { label: 'ID de Transaction', value: transaction.transactionId },
                 { label: 'ID Marchand', value: transaction.merchantId },
                 { label: 'Nom Marchand', value: transaction.merchantName },
-                { label: 'Émetteur/Destinataire', value: transaction.emetteurReceveur },
                 { label: 'Description d\'Opération', value: transaction.operationDescription },
                 { label: 'Montant de l\'Opération', value: formatCurrency(transaction.amount), isAmount: true },
                 { label: 'Solde Avant', value: formatCurrency(transaction.balanceBefore) },

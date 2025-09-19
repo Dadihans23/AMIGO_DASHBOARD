@@ -37,121 +37,142 @@ const rowsData = [
     userId: '1',
     name: 'Jordan Stevenson',
     email: 'jacinthe_blick@hotmail.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-01-15',
   },
   {
     avatarSrc: '/images/avatars/2.png',
     userId: '2',
     name: 'Richard Payne',
     email: 'jaylon_bartell3@gmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-02-20',
   },
   {
-    avatarSrcbirSrc: '/images/avatars/3.png',
+    avatarSrc: '/images/avatars/3.png',
     userId: '3',
     name: 'Jennifer Summers',
     email: 'tristin_johnson@gmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-03-10',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '4',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-04-05',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '5',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-05-12',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '6',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-06-01',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '7',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-07-15',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '8',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-08-20',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '9',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-09-01',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '10',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-09-10',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '11',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-09-15',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '12',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-09-20',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '13',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-09-25',
   },
   {
     avatarSrc: '/images/avatars/4.png',
     userId: '14',
     name: 'Mr. Justin Richardson',
     email: 'toney21@yahoo.com',
-    status: 'pending'
+    status: 'pending',
+    registrationDate: '2025-09-30',
   },
   {
     avatarSrc: '/images/avatars/5.png',
     userId: '15',
     name: 'Nicholas Tanner',
     email: 'hunter_kuhic68@hotmail.com',
-    status: 'active'
+    status: 'active',
+    registrationDate: '2025-10-05',
   },
 ];
 
 const UserManagement = () => {
-  const totalUsers = rowsData.length; // Total des utilisateurs
-  const totalUsersActive = rowsData.filter(user => user.status === 'active').length; // Utilisateurs actifs
-  const totalUsersInactive = rowsData.filter(user => user.status === 'pending').length; // Utilisateurs inactifs
   const [searchTerm, setSearchTerm] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [newUser, setNewUser] = useState({});
+  const [rows, setRows] = useState(rowsData); // État pour gérer les données dynamiquement
   const usersPerPage = 4;
 
-  const filteredUsers = rowsData.filter(user =>
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = rows.filter(user =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (!startDate || user.registrationDate >= startDate) &&
+    (!endDate || user.registrationDate <= endDate)
   );
+
+  const totalUsers = filteredUsers.length; // Total des utilisateurs filtrés
+  const totalUsersActive = filteredUsers.filter(user => user.status === 'active').length; // Utilisateurs actifs filtrés
+  const totalUsersInactive = filteredUsers.filter(user => user.status === 'pending').length; // Utilisateurs inactifs filtrés
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -175,7 +196,12 @@ const UserManagement = () => {
   };
 
   const handleAddUser = () => {
-    // Ajoute la logique pour sauvegarder l'utilisateur ici
+    if (!newUser.name || !newUser.email || !newUser.status || !newUser.registrationDate) {
+      alert('Tous les champs obligatoires doivent être remplis.');
+      return;
+    }
+    const newUserId = (parseInt(rows[rows.length - 1].userId) + 1).toString();
+    setRows([...rows, { ...newUser, userId: newUserId, avatarSrc: newUser.avatarSrc || '/images/avatars/default.png' }]);
     handleCloseAddDialog();
   };
 
@@ -193,8 +219,8 @@ const UserManagement = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>Total des Utilisateurs</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#fff' }}>Total des Utilisateurs</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalUsers}
               </Typography>
             </CardContent>
@@ -203,8 +229,8 @@ const UserManagement = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>Utilisateurs Actifs</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#fff' }}>Utilisateurs Actifs</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalUsersActive}
               </Typography>
             </CardContent>
@@ -213,8 +239,8 @@ const UserManagement = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>Utilisateurs Inactifs</Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold'  ,  color: '#fff' }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#fff' }}>Utilisateurs Inactifs</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalUsersInactive}
               </Typography>
             </CardContent>
@@ -223,12 +249,30 @@ const UserManagement = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <div className='p-4'>
+          <div className='p-4 flex gap-4'>
             <TextField
               label="Rechercher par email"
               variant="outlined"
-              fullWidth
+              sx={{ maxWidth: 300 }}
               onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <TextField
+              label="Date de début"
+              type="date"
+              variant="outlined"
+              sx={{ maxWidth: 200 }}
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              label="Date de fin"
+              type="date"
+              variant="outlined"
+              sx={{ maxWidth: 200 }}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
             />
           </div>
           <div className='overflow-x-auto'>
@@ -237,6 +281,7 @@ const UserManagement = () => {
                 <tr>
                   <th>Utilisateur</th>
                   <th>Email</th>
+                  <th>Date d'inscription</th>
                   <th>Statut</th>
                   <th>Actions</th>
                 </tr>
@@ -256,6 +301,9 @@ const UserManagement = () => {
                     </td>
                     <td className='!plb-1'>
                       <Typography>{row.email}</Typography>
+                    </td>
+                    <td className='!plb-1'>
+                      <Typography>{row.registrationDate}</Typography>
                     </td>
                     <td className='!pb-1'>
                       <Chip
@@ -317,6 +365,16 @@ const UserManagement = () => {
             variant="outlined"
             value={newUser.password || ''}
             onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Date d'inscription"
+            type="date"
+            fullWidth
+            variant="outlined"
+            value={newUser.registrationDate || ''}
+            onChange={(e) => setNewUser({ ...newUser, registrationDate: e.target.value })}
+            InputLabelProps={{ shrink: true }}
           />
           <FormControl fullWidth margin="dense">
             <InputLabel>Statut</InputLabel>

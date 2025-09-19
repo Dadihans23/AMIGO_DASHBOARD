@@ -26,7 +26,7 @@ const data = [
   {
     stats: '1.54k',
     color: 'warning',
-    title: 'Produits vendus',
+    title: 'Solde',
     icon: 'ri-macbook-line'
   },
   {

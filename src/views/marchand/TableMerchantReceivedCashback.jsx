@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 // MUI Imports
@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
 import CustomAvatar from '@core/components/mui/Avatar';
 
 // Third-party Imports
@@ -17,122 +18,186 @@ import classnames from 'classnames';
 // Styles Imports
 import tableStyles from '@core/styles/table.module.css';
 
-// Vars
 const rowsData = [
   {
-    userId: '1',
-    avatarSrc: '/images/avatars/1.png',
-    name: 'Jordan Stevenson',
-    email: 'jacinthe_blick@hotmail.com',
-    purchaseAmount: 350.50,
-    merchantCashback: 7.01, // 2% du montant
+    id: '1',
     date: '2025-08-15',
-    merchantEmail: 'marchanda@example.com',
+    amount: 350.50,
+    cashback: 70.10,
+    status: 'En attente',
+    transactionId: 'TX001',
   },
   {
-    userId: '3',
-    avatarSrc: '/images/avatars/3.png',
-    name: 'Jennifer Summers',
-    email: 'tristin_johnson@gmail.com',
-    purchaseAmount: 500.00,
-    merchantCashback: 10.00, // 2%
+    id: '2',
     date: '2025-07-20',
-    merchantEmail: 'marchanda@example.com',
+    amount: 500.00,
+    cashback: 100.00,
+    status: 'Reversé',
+    transactionId: 'TX002',
   },
   {
-    userId: '6',
-    avatarSrc: '/images/avatars/1.png',
-    name: 'Jordan Stevenson',
-    email: 'jacinthe_blick@hotmail.com',
-    purchaseAmount: 220.25,
-    merchantCashback: 4.41, // 2%
+    id: '3',
     date: '2025-09-05',
-    merchantEmail: 'marchanda@example.com',
+    amount: 220.25,
+    cashback: 44.05,
+    status: 'En attente',
+    transactionId: 'TX003',
   },
   {
-    userId: '2',
-    avatarSrc: '/images/avatars/2.png',
-    name: 'Richard Payne',
-    email: 'jaylon_bartell3@gmail.com',
-    purchaseAmount: 189.99,
-    merchantCashback: 3.80, // 2%
+    id: '4',
     date: '2025-09-02',
-    merchantEmail: 'marchandb@example.com',
+    amount: 189.99,
+    cashback: 38.00,
+    status: 'Reversé',
+    transactionId: 'TX004',
+  },
+  {
+    id: '5',
+    date: '2025-08-10',
+    amount: 400.00,
+    cashback: 80.00,
+    status: 'En attente',
+    transactionId: 'TX005',
+  },
+  {
+    id: '6',
+    date: '2025-07-25',
+    amount: 300.00,
+    cashback: 60.00,
+    status: 'Reversé',
+    transactionId: 'TX006',
+  },
+  {
+    id: '7',
+    date: '2025-09-10',
+    amount: 450.00,
+    cashback: 90.00,
+    status: 'En attente',
+    transactionId: 'TX007',
+  },
+  {
+    id: '8',
+    date: '2025-08-05',
+    amount: 250.00,
+    cashback: 50.00,
+    status: 'Reversé',
+    transactionId: 'TX008',
   },
 ];
 
 const TableMerchantReceivedCashback = ({ merchantEmail }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 4;
+  const itemsPerPage = 4;
 
-  const filteredUsers = rowsData.filter(
-    user =>
-      user.merchantEmail === merchantEmail &&
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    setCurrentPage(1); // Reset pagination when search term or date filters change
+  }, [searchTerm, startDate, endDate]);
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const filteredItems = rowsData.filter(item => {
+    if (searchTerm && !item.transactionId.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    if (startDate) {
+      const itemDate = new Date(item.date);
+      const start = new Date(startDate);
+      if (itemDate < start) return false;
+    }
+    if (endDate) {
+      const itemDate = new Date(item.date);
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+      if (itemDate > end) return false;
+    }
+    return true;
+  });
 
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   const router = useRouter();
 
-  const handleViewDetails = (userId) => {
-    router.push(`/cashbackMarchand/${userId}`);
+  const handleViewDetails = (id) => {
+    router.push(`/cashbackMarchand/${id}`);
   };
 
   return (
     <Card>
-      <div className='p-4'>
+      <div className='p-4 flex gap-4'>
         <TextField
-          label="Rechercher par email"
+          label="Rechercher par ID de Transaction"
           variant="outlined"
-          fullWidth
+          sx={{ maxWidth: 300 }}
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <TextField
+          label="Date de début"
+          type="date"
+          variant="outlined"
+          sx={{ maxWidth: 200 }}
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          label="Date de fin"
+          type="date"
+          variant="outlined"
+          sx={{ maxWidth: 200 }}
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
         />
       </div>
       <div className='overflow-x-auto'>
         <table className={tableStyles.table}>
           <thead>
             <tr>
-              <th>Utilisateur</th>
-              <th>Email</th>
+              <th>ID</th>
               <th>Date</th>
-              <th>Montant de l'Achat</th>
-              <th>Cashback Reçu</th>
+              <th>Montant Achat</th>
+              <th>Cashback dû</th>
+              <th>Statut</th>
+              <th>ID Transaction</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((row) => (
-              <tr key={row.userId}>
+            {currentItems.map((row) => (
+              <tr key={row.id}>
                 <td className='!plb-1'>
-                  <div className='flex items-center gap-3'>
-                    <CustomAvatar src={row.avatarSrc} size={34} />
-                    <div className='flex flex-col'>
-                      <Typography color='text.primary' className='font-medium'>
-                        {row.name}
-                      </Typography>
-                    </div>
-                  </div>
-                </td>
-                <td className='!plb-1'>
-                  <Typography>{row.email}</Typography>
+                  <Typography>{row.id}</Typography>
                 </td>
                 <td className='!plb-1'>
                   <Typography>{row.date}</Typography>
                 </td>
                 <td className='!plb-1'>
-                  <Typography>{row.purchaseAmount.toFixed(2)} cfa</Typography>
+                  <Typography>{row.amount.toFixed(2)} cfa</Typography>
                 </td>
                 <td className='!plb-1'>
-                  <Typography>{row.merchantCashback.toFixed(2)} cfa</Typography>
+                  <Typography>{row.cashback.toFixed(2)} cfa</Typography>
+                </td>
+                <td className='!plb-1'>
+                  <Chip
+                    className='capitalize'
+                    variant='tonal'
+                    color={
+                      row.status === 'Reversé' ? 'success' :
+                      row.status === 'En attente' ? 'warning' : 'error'
+                    }
+                    label={row.status}
+                    size='small'
+                  />
+                </td>
+                <td className='!plb-1'>
+                  <Typography>{row.transactionId}</Typography>
                 </td>
                 <td className='!pb-1'>
-                  <Button variant='outlined' onClick={() => handleViewDetails(row.userId)}>
+                  <Button variant='outlined' onClick={() => handleViewDetails(row.id)}>
                     Voir Détails
                   </Button>
                 </td>

@@ -16,6 +16,9 @@ const Award = () => {
           <Typography>Bienvenue sur votre tableau de bord marchand !</Typography>
         </div>
         <div>
+          <Typography variant='h6' >
+            Montant dû
+          </Typography>
           <Typography variant='h4' color='primary'>
             42.8k cfa
           </Typography>

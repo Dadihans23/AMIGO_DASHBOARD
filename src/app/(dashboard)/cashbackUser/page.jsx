@@ -68,7 +68,7 @@ const MerchantCashback = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre Total d'Utilisateurs</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Nombre Total de clients</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalUsers}
               </Typography>
@@ -79,7 +79,7 @@ const MerchantCashback = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Montant Total des Achats</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Montant Total des Ventes</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalPurchasesAmount.toFixed(2)} cfa
               </Typography>
@@ -90,7 +90,7 @@ const MerchantCashback = () => {
         <Grid item xs={12} md={4}>
           <Card sx={{ backgroundColor: '#1976d2', color: '#fff', textAlign: 'center' }}>
             <CardContent>
-              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback Total Reversé</Typography>
+              <Typography variant="h5" sx={{ color: '#fff' }}>Cashback Total Clients</Typography>
               <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {totalCashbackPaid.toFixed(2)} cfa
               </Typography>

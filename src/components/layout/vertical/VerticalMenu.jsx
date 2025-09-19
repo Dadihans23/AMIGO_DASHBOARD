@@ -194,7 +194,7 @@ const VerticalMenu = ({ scrollMenu }) => {
                 cashback utilisateur
             </MenuItem>
             <MenuItem href='/cashbackMarchand'  icon={<i className='ri-exchange-dollar-line' />}>
-                Mon Cashback
+                Mon solde
             </MenuItem>
             <MenuItem href='/statistiques' icon={<i className='ri-bar-chart-line' />}>
               Statistiques
@@ -242,14 +242,14 @@ const VerticalMenu = ({ scrollMenu }) => {
                 Transactions
               </MenuItem>
               <MenuItem href='/amigo-dash/ristournes'>
-                Ristournes Marchand
+                Paiemnent Marchand
               </MenuItem>
               <MenuItem href='/amigo-dash/revenueAmigo'>
                 Revenue Amigo
               </MenuItem>
-               <MenuItem href='/amigo-dash/usercashback'>
+               {/* <MenuItem href='/amigo-dash/usercashback'>
                 Cashback utilisateurs
-              </MenuItem>
+              </MenuItem> */}
             </SubMenu>
 
             <SubMenu label='Alerte et Action' icon={<i className='ri-notification-line' />}>
